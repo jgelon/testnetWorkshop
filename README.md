@@ -14,7 +14,7 @@ Testnet Zomer Workshop
 
 - Start up IntelliJ
 - Choose 'Check out from Version Control' -> Git
-- Fill in URL "https://github.com/jgelon/TestForce.git"
+- Fill in URL "https://github.com/jgelon/testnetWorkshop.git"
 - Press Clone
 - When the following pop-up comes up select 'No': 
 
