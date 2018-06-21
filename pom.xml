@@ -98,11 +98,9 @@
                         </driver>
                         <driver>
                             <name>chromedriver</name>
-                            <bit>32</bit>
                         </driver>
                         <driver>
                             <name>geckodriver</name>
-                            <bit>64</bit>
                         </driver>
                     </drivers>
                 </configuration>
