@@ -60,7 +60,7 @@ public class BrowserFactory {
         String browserType = null;
 
         try {
-            input = new FileInputStream(getRootPath() + "\\browser.properties");
+            input = new FileInputStream(getRootPath() + File.separator + "browser.properties");
             prop.load(input);
             browserType = prop.getProperty("browser.type");
         } catch (final IOException e) {
