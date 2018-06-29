@@ -1,4 +1,4 @@
-cucumber-java-selenium
+Testnet Zomer Workshop
 ==================
 
 ## Download & Install:
