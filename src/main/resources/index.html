@@ -1,0 +1,273 @@
+<!DOCTYPE HTML>
+<!--
+	Prism by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Capgemini automated test</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+	</head>
+
+<body ng-app="bdd" ng-init="page=1;minLoan={'Mini-loan':300,'Personal loan':1500, 'Revolving credit':2500, 'Car-loan':2000, 'Mortgage':50000}">
+
+		<!-- Banner -->
+			<section id="banner">
+				<div class="inner split">
+					<section>
+						<h2><a href="https://academy.capgemini.nl/trainingen/selenium-webdriver-cucumber">Selenium Webdriver & Cucumber training</a></h2>
+					</section>
+					<section>
+						<p>A responsive site for automated testing</p>			
+					</section>
+				</div>
+			</section>
+
+
+<div ng-controller="MainCtrl" class="container">
+  <div ng-hide="page!=1">
+    <h1>Request</h1>
+    <h3>Why do you need a loan?</h3>
+    <button ng-click="toggleModal('It is not a good idea to apply for a loan for just groceries.')" class="btn btn-default">Groceries</button>
+    <button ng-click="toggleModal('Perhaps it is not such a good idea to apply for a loan for just investments.')" class="btn btn-default">Investments</button>
+    <button ng-click="toggleModal('A Revolving Credit or a Personal loan is probably the way to go.')" class="btn btn-default">Bills</button>
+    <button ng-click="toggleModal('A mini-loan or a Personal loan is probably the best choice.')" class="btn btn-default">Furniture</button>
+    <button ng-click="toggleModal('A Car-loan is the best choice when buying a car.')" class="btn btn-default">Car</button>
+    <button ng-click="toggleModal('You need a mortgage.')" class="btn btn-default">House</button>
+    <h3>What type of loan would you like?</h3>
+    <form role="form" name="myform" novalidate>
+      <div class="form-group">
+        <input type="radio" name="loanType" value="Mini-loan" required ng-model="loanType"/>
+          Mini-loan (minimum 300 euro)<br/>
+        <input type="radio" name="loanType" value="Personal loan" ng-model="loanType"/>
+          Personal loan (minimum 1.500 euro) <br/>
+        <input type="radio" name="loanType" value="Revolving credit" ng-model="loanType"/>
+          Revolving credit (minimum 2.500 euro)<br/>
+        <input type="radio" name="loanType" value="Car-loan" ng-model="loanType"/>
+          Car-loan (minimum 2.000 euro)<br/>
+        <input type="radio" name="loanType" value="Mortgage" ng-model="loanType"/>
+          Mortgage (minimum 50.000 euro)<br/>
+      </div>
+      <h3 id="amountToBorrow">How much would you like to borrow?</h3>
+      <div class="form-group">
+        Amount to borrow: 
+        <input type="number" min="0" max="1000000" name="amount" placeholder="Amount in Euros" ng-model="amount"/>
+          <span ng-show="myform.amount.$dirty && amount<minLoan[loanType]" class="alert-danger">The desired amount is lower than the minimum amount ({{minLoan[loanType]}}) of the selected loan type. You may eventually choose another loan type.</span>
+      </div>
+
+      <button class="btn btn-default" ng-disabled="loanType==null || amount==null || amount<minLoan[loanType]" ng-click="page='2';submit()" id="submitButton1">Continue to explanation</button>
+    </form>
+
+    <modal title="Tip" visible="showModal">
+      <form role="form">
+        <div class="form-group">
+          <p id="tiptext">{{ text }}</p>
+        </div>
+      </form>
+    </modal>
+  </div>
+
+  <div ng-hide="page!=2">
+    <h2>Loans explained</h2>
+    <table>
+      <tr><td>Chosen loan type: </td><td id="{{rid2}}:chosenLoanType">{{loanType}}<td></tr>
+      <tr><td>Amount to borrow (euro): </td><td id="{{rid}}:chosenAmount">{{amount}}<td></tr>
+    </table>
+    <form role="form" name="form2" novalidate>
+      <div class="form-group">
+        <input type="radio" name="knowledge" value="yes" id="knowledge_yes" ng-model="knowledge"/>
+        <label for="knowledge_yes">I have knowledge of and experience with borrowing.</label><br/>
+        <input type="radio" name="knowledge" value="no" id="knowledge_no" ng-model="knowledge"/>
+        <label for="knowledge_no">I do not have knowledge of and experience with borrowing.</label><br/>
+      </div>
+    </form>
+    <div ng-hide="knowledge!='no'" id="noKnowledgeExplanation">
+		Borrowing money is not always a good idea. Make sure to inform yourself on the conditions and interest rates which apply to the loan. Make note that the provided interest rate might apply for only a limited period of the loan. There are many other conditions to look into when automating this test. Take your time to think about this offer and ask questions whenever something is unclear.     
+        <p></p>
+    </div>
+    <button class="btn btn-default" ng-click="page='1';submit()" id="returnButton">Go back to request</button>
+    <button class="btn btn-default" ng-click="page='3'" ng-disabled="knowledge==null" id="submitButton">Continue to personal data</button>
+  </div>
+
+  <div ng-hide="page!=3">
+    <h2>Personal data</h2>
+    <form role="form" name="form3">
+      <div class="form-group">
+        <table>
+          <tr>
+            <td><label for="name">Name</label></td>
+            <td><input type="text" name="name" id="name" placeholder="Your name" ng-model="name" required/></td><td><span ng-show = "form3.name.$error.required && showErrors">Mandatory</span></td></tr>
+          <tr><td><label>Gender</label></td>
+            <td><input type="radio" name="gender" id="man" value="male" ng-model="gender" required/>
+              <label for="man">male</label><br/>
+              <input type="radio" name="gender" id="woman" value="female" ng-model="gender" required/>
+              <label for="woman">female</label>  </td><td><span ng-show = "form3.gender.$error.required && showErrors">Mandatory</span></td></tr>
+          <tr><td><label for="dob">Date of birth</label></td>
+            <td><input type="date" name="dob" id="dob" placeholder="your date of birth" ng-model="dob" required/> </td><td><span ng-show = "form3.dob.$error.required && showErrors">Mandatory</span><span ng-show = "form3.dob.$dirty && (age(dob)<18 || age(dob)>65)">Age must be between 18 and 65</span></td></tr>
+          <tr><td><label for="address">Address</label></td>
+            <td><input type="text" name="address" id="address" placeholder="your address" ng-model="address" required/> </td><td><span ng-show = "form3.address.$error.required && showErrors">Mandatory</span></td></tr>
+          <tr><td><label for="grossIncome">Gross income</label></td>
+            <td><input type="number" name="grossIncome" id="grossIncome" placeholder="your gross income" ng-model="grossIncome" required/>   </td><td><span ng-show = "form3.grossIncome.$error.required && showErrors">Mandatory</span></td></tr>
+          <tr><td><label for="status">Marital status</label></td>
+            <td><select name="status" ng-model="status" id="status" required>
+              <option value="single">single</option>
+              <option value="married">married</option>
+              <option value="living together">living together</option>
+              <option value="registered partners">registered partners</option>
+            </select></td><td><span ng-show = "form3.status.$error.required && showErrors">Mandatory</span></td></tr>
+          <tr ng-show="status=='married'"><td></td>
+            <td><input type="checkbox" name="together" id="together" value="j" ng-model="together" />
+              <label for="together">My partner and I would like to borrow money together</label>  </td><td></td></tr>
+
+          <tr ng-show="together">
+            <td><label for="name">Name partner</label></td>
+            <td><input type="text" name="namepartner" id="namepartner" placeholder="Your partners name" ng-model="namepartner" /></td><td><span ng-show = "together && form3.namepartner.$error.required && showErrors">Mandatory</span></td></tr>
+          <tr ng-show="together"><td>Gender partner</td>
+            <td><input type="radio" name="genderpartner" id="partnerman" value="male" ng-model="genderpartner" />
+              <label for="partnerman">male</label><br/>
+              <input type="radio" name="genderpartner" id="partnerwoman" value="female" ng-model="genderpartner" />
+              <label for="partnerwoman">female</label>  </td><td><span ng-show = "form3.genderpartner.$error.required && showErrors">Mandatory</span></td></tr>
+          <tr ng-show="together"><td><label for="dob">Date of birth partner</label></td>
+            <td><input type="date" name="dobpartner" id="dobpartner" placeholder="uw partners dob" ng-model="dobpartner" /> </td><td><span ng-show = "form3.dobpartner.$error.required && showErrors">Mandatory</span><span ng-show = "form3.dobpartner.$dirty && (age(dobpartner)<18 || age(dobpartner)>65)">Age must be between 18 and 65</span></td></tr>
+
+          <tr><td><label for="typegrossIncome">Income type</label></td>
+            <td><select name="typegrossIncome" ng-model="typegrossIncome" id="typegrossIncome" required>
+              <option value="temporary contract">temporary contract</option>
+              <option value="permanent contract">permanent contract</option>
+              <option value="self-employed">self-employed</option>
+              <option value="temporary worker">temporary worker</option>
+              <option value="no income">no income</option>
+            </select> </td><td><span ng-show = "form3.typegrossIncome.$error.required && showErrors">Mandatory</span></td></tr>
+          <tr><td><label for="paymentslip">Payment slip</label></td><td><input type="file" name="paymentslip" id="paymentslip" accept="application/pdf,image/*"/></td></tr>
+          <tr><td><label for="id">Identification</label></td><td><input type="file" name="id" id="id" accept="application/pdf,image/*"/></td></tr>
+          <tr ng-show="typegrossIncome=='temporary contract'||typegrossIncome=='temporary worker'"><td><label for="letterOfIntent">letter of intent</label></td><td><input type="file" name="letterOfIntent" id="letterOfIntent" accept="application/pdf,image/*"/></td></tr>
+        </table>
+
+        <button class="btn btn-default" ng-click="page='2'" id="returnButton">Back to explanation</button>
+        <button class="btn btn-default" ng-click="form3.$valid ? page='4' : showErrors=form3.$error" id="submitButton">Send loan request</button>
+
+      </div>
+    </form>
+  </div>
+
+  <div ng-hide="page!=4">
+    <h2>Confirm data</h2>
+    <table>
+      <tr><td>Chosen loan: </td><td id="result_loanType">{{loanType}}<td></tr>
+      <tr><td>Amount to borrow (euro): </td><td id="result_amount">{{amount}}<td></tr>
+      <tr><td>Name: </td><td id="result_name">{{name}}<td></tr>
+      <tr><td>Gender: </td><td id="result_gender">{{gender}}<td></tr>
+      <tr><td>Date of birth: </td><td id="result_dob">{{dob  | date:'dd-MM-yyyy'}}<td></tr>
+      <tr><td>Address: </td><td id="result_address">{{address}}<td></tr>
+      <tr><td>Gross income: </td><td id="result_grossIncome">{{grossIncome}}<td></tr>
+      <tr><td>Marital status: </td><td id="result_status">{{status}}<td></tr>
+      <tr ng-show="together && status=='married'"><td>Name partner: </td><td id="result_namepartner">{{namepartner}}<td></tr>
+      <tr ng-show="together && status=='married'"><td>Gender partner: </td><td id="result_genderpartner">{{genderpartner}}<td></tr>
+      <tr ng-show="together && status=='married'"><td>Date of birth partner: </td><td id="result_dobpartner">{{dobpartner  | date:'dd-MM-yyyy'}}<td></tr>
+      <tr><td>Income type: </td><td id="result_typegrossIncome">{{typegrossIncome}}<td></tr>
+    </table>
+    <div>
+        <p></p>
+    </div>
+    <button class="btn btn-default" ng-click="page='3'" id="returnButton">Back to personal data</button>
+    <button class="btn btn-default" ng-click="page='5'" id="submitButton">Proceed to questionnaire</button>
+  </div>
+
+  <div ng-hide="page!=5">
+    <h2>Questionnaire</h2>
+    <p>How did you like this request form?</p>
+    <form role="form" name="form4" novalidate>
+      <div class="form-group">
+        <input type="radio" name="enquete" value="yes" id="yes" ng-model="enquete"/>
+        <label for="yes">Wheeee!</label><br/>
+        <input type="radio" name="enquete" value="no" id="no" ng-model="enquete"/>
+        <label for="no">Meh.</label><br/>
+        <textarea placeholder="Wait, but why?" id="butWhyyy"></textarea>
+      </div>
+    </form>
+
+    <button class="btn btn-default" ng-click="page='6';submit()" id="submitButton">Save</button>
+
+  </div>
+
+  <div ng-hide="page!=6">
+    <h2>Thank you for your request {{name}}!</h2>
+      <p></p>
+  </div>
+</div>
+<!-- Footer -->
+<footer id="footer">
+	<div class="copyright">
+		&copy; Mazin Inaad. All rights reserved. Design: <a href="http://templated.co">TEMPLATED</a>.<a href="https://www.capgemini.com/"><img src="images/caplogo.png" alt="" height="40px"/></a>
+	</div>
+</footer>
+<script>
+    var bdd = angular.module('bdd', []);
+
+    bdd.controller('MainCtrl', function ($scope) {
+        $scope.showModal = false;
+        $scope.page=1;
+        $scope.toggleModal = function(text){
+            $scope.showModal = !$scope.showModal;
+            $scope.text=text;
+        };
+        $scope.age = function(dob){
+            return (Date.now()-Date.parse(dob))/(365.25*24*3600000);
+        };
+		$scope.rid = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
+		$scope.rid2 = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
+    });
+
+    bdd.directive('modal', function () {
+        return {
+            template: '<div class="modal fade">' +
+            '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
+            '<h4 class="modal-title">{{ title }}</h4>' +
+            '</div>' +
+            '<div class="modal-body" ng-transclude></div>' +
+            '</div>' +
+            '</div>' +
+            '</div>',
+            restrict: 'E',
+            transclude: true,
+            replace:true,
+            scope:true,
+            link: function postLink(scope, element, attrs) {
+                scope.title = attrs.title;
+
+                scope.$watch(attrs.visible, function(value){
+                    if(value == true)
+                        $(element).modal('show');
+                    else
+                        $(element).modal('hide');
+                });
+
+                $(element).on('shown.bs.modal', function(){
+                    scope.$apply(function(){
+                        scope.$parent[attrs.visible] = true;
+                    });
+                });
+
+                $(element).on('hidden.bs.modal', function(){
+                    scope.$apply(function(){
+                        scope.$parent[attrs.visible] = false;
+                    });
+                });
+            }
+        };
+    });
+</script>
+</body>
+</html>
