@@ -3,10 +3,11 @@ Testnet Zomer Workshop
 
 ## Download & Install:
 
-- Java IDE: [IntelliJ community edition](https://www.jetbrains.com/idea/download/#section=windows)
+- Java IDE: [IntelliJ community edition](https://www.jetbrains.com/idea/download/#section=windows) 
+> You can use your own preferred IDE for Java (e.g. Eclipse). However the trainers know the settings and hotkeys for IntelliJ which are written in the [CheatSheet.docx](CheatSheet.docx), so the latter is preferred.
 - Chrome Plugin: [CSS Selector Helper for Chrome](https://chrome.google.com/webstore/detail/css-selector-helper-for-c/gddgceinofapfodcekopkjjelkbjodin)
 - [Git](https://git-scm.com)
-- [Java jdk](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (niet de JRE)
+- [Java jdk](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (not the JRE)
 
 
 ## Setup
