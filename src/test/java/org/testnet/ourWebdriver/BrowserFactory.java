@@ -1,12 +1,11 @@
-package com.testnet.ourWebdriver;
+package org.testnet.ourWebdriver;
 
 import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.testnet.utils.FileHelper;
 
 import java.io.*;
 import java.net.MalformedURLException;
 import java.util.Properties;
-
-import static com.testnet.utils.FileHelper.getRootPath;
 
 public class BrowserFactory {
 
@@ -31,7 +30,7 @@ public class BrowserFactory {
 
     static String getDriverFile(String browserName) {
         FileFilter fileFilter = new WildcardFileFilter("*"+browserName+"*");
-        File[] dir = new File(getRootPath() + File.separator + "drivers" + File.separator).listFiles(fileFilter);
+        File[] dir = new File(FileHelper.getRootPath() + File.separator + "drivers" + File.separator).listFiles(fileFilter);
         String driverPath = "";
         try {
             driverPath = dir[0].getAbsolutePath();
@@ -62,7 +61,7 @@ public class BrowserFactory {
         String browserType = null;
 
         try {
-            input = new FileInputStream(getRootPath() + "\\browser.properties");
+            input = new FileInputStream(FileHelper.getRootPath() + "\\browser.properties");
             prop.load(input);
             browserType = prop.getProperty("browser.type");
         } catch (final IOException e) {

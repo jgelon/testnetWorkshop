@@ -1,4 +1,4 @@
-package com.testnet.ourWebdriver;
+package org.testnet.ourWebdriver;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static com.testnet.ourWebdriver.BrowserFactory.getDriverFile;
+import static org.testnet.ourWebdriver.BrowserFactory.getDriverFile;
 
 /**
  * Created by dlammers on 2/27/2017.

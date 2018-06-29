@@ -1,4 +1,4 @@
-package com.testnet;
+package org.testnet;
 
 import cucumber.api.CucumberOptions;
 import org.junit.runner.RunWith;

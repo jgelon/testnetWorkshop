@@ -1,4 +1,4 @@
-package com.testnet.ourWebdriver;
+package org.testnet.ourWebdriver;
 
 import cucumber.api.java.After;
 import org.openqa.selenium.WebDriver;

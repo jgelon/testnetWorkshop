@@ -1,4 +1,4 @@
-package com.testnet;
+package org.testnet;
 
 /**
  * Hello world!

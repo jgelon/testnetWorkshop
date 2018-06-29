@@ -1,4 +1,4 @@
-package com.testnet;
+package org.testnet;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

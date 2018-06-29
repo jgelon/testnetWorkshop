@@ -1,33 +1,33 @@
-package com.testnet.ourWebdriver;
+package org.testnet.ourWebdriver;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static com.testnet.ourWebdriver.BrowserFactory.getDriverFile;
+import static org.testnet.ourWebdriver.BrowserFactory.getDriverFile;
 
 /**
  * Created by dlammers on 2/27/2017.
  */
-public class OurFirefoxDriver extends FirefoxDriver implements OurWebDriver {
+public class OurChromeDriver extends ChromeDriver implements OurWebDriver {
 
-    private static OurFirefoxDriver browser;
+    private static OurChromeDriver browser;
 
-    private OurFirefoxDriver() {
+    private OurChromeDriver() {
 
     }
 
-    static OurFirefoxDriver getBrowser() {
-        System.setProperty("webdriver.gecko.driver", getDriverFile("gecko"));
+    static OurChromeDriver getBrowser() {
+        System.setProperty("webdriver.chrome.driver", getDriverFile("chrome"));
         if (browser == null) {
-            browser = new OurFirefoxDriver();
+            browser = new OurChromeDriver();
         } else if (browser.getSessionId() == null) {
-            browser = new OurFirefoxDriver();
+            browser = new OurChromeDriver();
         }
         return browser;
     }
@@ -67,6 +67,5 @@ public class OurFirefoxDriver extends FirefoxDriver implements OurWebDriver {
             }
         });
     }
-
 
 }

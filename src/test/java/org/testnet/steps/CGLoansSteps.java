@@ -1,6 +1,6 @@
-package com.testnet.steps;
+package org.testnet.steps;
 
-import com.testnet.ourWebdriver.BrowserFactory;
+import org.testnet.ourWebdriver.BrowserFactory;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import org.openqa.selenium.By;
@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.net.MalformedURLException;
 
-import static com.testnet.utils.FileHelper.getRootPath;
+import static org.testnet.utils.FileHelper.getRootPath;
 
 public class CGLoansSteps {
     private final WebDriver browser;
