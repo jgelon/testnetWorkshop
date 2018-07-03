@@ -1,11 +1,12 @@
 package org.testnet.ourWebdriver;
 
 import org.apache.commons.io.filefilter.WildcardFileFilter;
-import org.testnet.utils.FileHelper;
 
 import java.io.*;
 import java.net.MalformedURLException;
 import java.util.Properties;
+
+import static org.testnet.utils.FileHelper.getRootPath;
 
 public class BrowserFactory {
 
@@ -30,16 +31,14 @@ public class BrowserFactory {
 
     static String getDriverFile(String browserName) {
         FileFilter fileFilter = new WildcardFileFilter("*"+browserName+"*");
-        File[] dir = new File(FileHelper.getRootPath() + File.separator + "drivers" + File.separator).listFiles(fileFilter);
-        String driverPath = "";
-        try {
-            driverPath = dir[0].getAbsolutePath();
+        File[] dir = new File(getRootPath() + File.separator + "drivers" + File.separator).listFiles(fileFilter);
+        for(int i = 0; i < dir.length; i++){
+            if(dir[i].getName().contains("version")) {
+                continue;
+            }
+            return dir[i].getAbsolutePath();
         }
-        catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("No driver found for '"+browserName+"' in the folder drivers.\nStopping execution.");
-            System.exit(1);
-        }
-        return driverPath;
+        throw new IllegalStateException("No driver found for '" + browserName + "' in the folder drivers.\nStopping execution.");
     }
 
     private static OurWebDriver getBrowserOfType(final String browserType) {
@@ -61,7 +60,7 @@ public class BrowserFactory {
         String browserType = null;
 
         try {
-            input = new FileInputStream(FileHelper.getRootPath() + "\\browser.properties");
+            input = new FileInputStream(getRootPath() + File.separator + "browser.properties");
             prop.load(input);
             browserType = prop.getProperty("browser.type");
         } catch (final IOException e) {
